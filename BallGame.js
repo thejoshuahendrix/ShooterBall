@@ -18,9 +18,10 @@ const centerx = canvas.width/2;
 const centery = canvas.height/2;
 
 
-const projectiles= [];
-const enemies= [];
-const particles= [];
+var projectiles= [];
+var enemies= [];
+var particles= [];
+var speed = 1;
 
 
 
@@ -143,8 +144,8 @@ function spawnEnemies() {
         const angle = Math.atan2(centery - y, centerx -x);
         
         const velocity= {
-            x: Math.cos(angle)*.1,
-            y: Math.sin(angle)*.1
+            x: Math.cos(angle)*speed,
+            y: Math.sin(angle)*speed
         }
         enemies.push(new Enemy(x,y,radius,color,velocity));
     }, 3000)
@@ -242,7 +243,12 @@ function animate(){
     
 })}
     
-
+function restartGame(){
+    projectiles = [];
+    enemies = [];
+    particles = [];
+    score = 0;
+}
 
 
 
@@ -256,6 +262,7 @@ window.addEventListener('click', (event)=>{
 })
 startGameBtn.addEventListener('click',() => {
     cardEl.style.display ='none';
+    restartGame();
     spawnEnemies();
     animate();
     
