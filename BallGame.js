@@ -252,14 +252,23 @@ function restartGame(){
 
 
 
-window.addEventListener('click', (event)=>{
-    const angle = Math.atan2(event.clientY - centery,event.clientX-centerx);
-    const velocity ={
-        x:Math.cos(angle)*10,
-        y:Math.sin(angle)*10
-    }
-    projectiles.push(new Projectile(centerx, centery, 4,'red',velocity));
-})
+function shootProjectile(event) {
+    const angle = Math.atan2(event.clientY - centery, event.clientX - centerx);
+    const velocity = {
+        x: Math.cos(angle) * 10,
+        y: Math.sin(angle) * 10
+    };
+    projectiles.push(new Projectile(centerx, centery, 4, 'red', velocity));
+}
+
+window.addEventListener('click', shootProjectile);
+window.addEventListener('touchstart', (event) => {
+    const touch = event.touches[0];
+    shootProjectile({
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    });
+});
 startGameBtn.addEventListener('click',() => {
     cardEl.style.display ='none';
     restartGame();
