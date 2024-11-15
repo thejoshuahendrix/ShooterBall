@@ -253,14 +253,33 @@ function restartGame(){
 
 
 function shootProjectile(event) {
-    const angle = Math.atan2(event.clientY - centery, event.clientX - centerx);
+
+    const angle = Math.atan2(event.clientY - player.y, event.clientX - player.x);
     const velocity = {
         x: Math.cos(angle) * 10,
         y: Math.sin(angle) * 10
     };
-    projectiles.push(new Projectile(centerx, centery, 4, 'red', velocity));
+    projectiles.push(new Projectile(player.x, player.y, 4, 'red', velocity));
+}
+function movePlayer(event) {
+    const speed = 25;
+    switch (event.key) {
+        case 'w':
+            player.y -= speed;
+            break;
+        case 'a':
+            player.x -= speed;
+            break;
+        case 's':
+            player.y += speed;
+            break;
+        case 'd':
+            player.x += speed;
+            break;
+    }
 }
 
+window.addEventListener('keydown', movePlayer);
 window.addEventListener('click', shootProjectile);
 window.addEventListener('touchstart', (event) => {
     const touch = event.touches[0];
